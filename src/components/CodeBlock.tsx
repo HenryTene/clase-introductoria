@@ -18,21 +18,24 @@ export const CodeBlock = ({ code, language = "bash" }: CodeBlockProps) => {
 
   return (
     <div className="relative group my-4">
-      <div className="bg-code text-code-foreground rounded-lg p-4 pr-12 overflow-x-auto">
+      <div className="flex items-center justify-between px-4 py-2 bg-code rounded-t-lg border border-border/50 border-b-0">
+        <span className="text-xs font-mono text-muted-foreground">{language}</span>
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-7 px-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
+          onClick={handleCopy}
+        >
+          {copied ? (
+            <><Check className="h-3.5 w-3.5 text-success mr-1" /> Copiado</>
+          ) : (
+            <><Copy className="h-3.5 w-3.5 mr-1" /> Copiar</>
+          )}
+        </Button>
+      </div>
+      <div className="bg-code text-code-foreground rounded-b-lg p-4 overflow-x-auto border border-border/50 border-t-0">
         <code className="text-sm font-mono whitespace-pre">{code}</code>
       </div>
-      <Button
-        size="sm"
-        variant="ghost"
-        className="absolute top-2 right-2 h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity bg-muted/50 hover:bg-muted"
-        onClick={handleCopy}
-      >
-        {copied ? (
-          <Check className="h-4 w-4 text-success" />
-        ) : (
-          <Copy className="h-4 w-4" />
-        )}
-      </Button>
     </div>
   );
 };

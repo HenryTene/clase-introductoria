@@ -9,9 +9,9 @@ interface SectionCardProps {
 
 export const SectionCard = ({ title, icon: Icon, children }: SectionCardProps) => {
   return (
-    <Card className="p-6 md:p-8 bg-card shadow-sm">
+    <Card className="p-6 md:p-8 bg-gradient-card shadow-card border-border/50">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-primary/10 rounded-lg">
+        <div className="p-2 bg-primary/15 rounded-lg shadow-glow">
           <Icon className="h-6 w-6 text-primary" />
         </div>
         <h2 className="text-2xl font-bold text-foreground">{title}</h2>

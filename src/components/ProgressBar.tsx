@@ -14,11 +14,16 @@ export const ProgressBar = ({ current, total }: ProgressBarProps) => {
         <span className="text-sm font-medium text-foreground">
           Progreso del curso
         </span>
-        <span className="text-sm text-muted-foreground">
-          {current} de {total} secciones
+        <span className="text-sm font-mono text-primary">
+          {current} / {total}
         </span>
       </div>
-      <Progress value={percentage} className="h-2" />
+      <div className="h-2 bg-secondary rounded-full overflow-hidden">
+        <div 
+          className="h-full bg-gradient-primary rounded-full transition-all duration-500"
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
     </div>
   );
 };
