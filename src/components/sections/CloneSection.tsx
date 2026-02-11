@@ -19,12 +19,12 @@ const quizQuestions = [
     question: "Después de clonar el repositorio, ¿qué debes hacer antes de ejecutar código?",
     options: [
       "Nada, ya está listo",
-      "Crear y activar un entorno virtual, luego instalar dependencias",
-      "Solo crear un entorno virtual",
-      "Solo instalar dependencias globalmente"
+      "Ejecutar 'uv sync' para instalar las dependencias del proyecto",
+      "Solo crear un entorno virtual manualmente",
+      "Solo instalar dependencias globalmente con pip"
     ],
     correctAnswer: 1,
-    explanation: "Debes crear un entorno virtual, activarlo, e instalar las dependencias especificadas en requirements.txt para que el proyecto funcione correctamente."
+    explanation: "Con uv, solo necesitas ejecutar 'uv sync' para instalar todas las dependencias definidas en el proyecto. uv se encarga del entorno virtual automáticamente."
   }
 ];
 
@@ -64,7 +64,7 @@ export const CloneSection = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary font-bold">✓</span>
-                <span>Incluye el archivo requirements.txt con todas las dependencias</span>
+                <span>Incluye el archivo <code className="bg-code text-code-foreground px-1 rounded text-xs">pyproject.toml</code> con todas las dependencias</span>
               </li>
             </ul>
           </div>
@@ -93,59 +93,37 @@ export const CloneSection = () => {
             <h4 className="font-semibold mt-4 mb-2">Paso 3: Abre la terminal en esa ubicación</h4>
             <p className="text-sm mb-2">Navega a la carpeta elegida:</p>
             <CodeBlock code="cd C:\Users\tu_usuario\Cursos" />
-            <p className="text-sm text-muted-foreground">
-              (Ajusta la ruta según tu sistema operativo y estructura de carpetas)
-            </p>
 
             <h4 className="font-semibold mt-4 mb-2">Paso 4: Clona el repositorio</h4>
-            <p className="text-sm mb-2">Ejecuta el comando <code>git clone</code> seguido de la URL:</p>
             <CodeBlock code="git clone https://github.com/instructor/curso-ml-python.git" />
-            <p className="text-sm mt-2 text-muted-foreground">
-              Esto creará una carpeta <code>curso-ml-python</code> con todo el contenido del repositorio.
-            </p>
 
             <h4 className="font-semibold mt-4 mb-2">Paso 5: Entra a la carpeta del proyecto</h4>
             <CodeBlock code="cd curso-ml-python" />
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold mb-3">Configurar el entorno del proyecto clonado</h3>
+            <h3 className="text-xl font-semibold mb-3">Configurar el entorno con uv</h3>
             <p className="mb-3">
-              Ahora que tienes el código, necesitas preparar el entorno para ejecutarlo:
+              Ahora que tienes el código, usa <strong className="text-primary">uv</strong> para preparar el entorno:
             </p>
 
-            <h4 className="font-semibold mt-4 mb-2">Paso 1: Crea un entorno virtual</h4>
-            <CodeBlock code="python -m venv .venv" />
-
-            <h4 className="font-semibold mt-4 mb-2">Paso 2: Activa el entorno virtual</h4>
-            <p className="text-sm mb-2"><strong>Windows (PowerShell):</strong></p>
-            <CodeBlock code=".\.venv\Scripts\Activate.ps1" />
-            <p className="text-sm mb-2"><strong>Windows (CMD):</strong></p>
-            <CodeBlock code=".venv\Scripts\activate.bat" />
-            <p className="text-sm mb-2"><strong>macOS / Linux:</strong></p>
-            <CodeBlock code="source .venv/bin/activate" />
-
-            <h4 className="font-semibold mt-4 mb-2">Paso 3: Instala las dependencias del curso</h4>
-            <p className="text-sm mb-2">
-              El repositorio debe incluir un archivo <code>requirements.txt</code>. Instala todas las 
-              bibliotecas necesarias:
+            <h4 className="font-semibold mt-4 mb-2">Paso 1: Sincroniza las dependencias</h4>
+            <p className="text-sm mb-2">Si el proyecto ya usa uv (tiene <code className="bg-code text-code-foreground px-1 rounded text-xs">pyproject.toml</code>):</p>
+            <CodeBlock code="uv sync" />
+            <p className="text-sm text-muted-foreground mt-2">
+              uv creará automáticamente el entorno virtual e instalará todas las dependencias.
             </p>
-            <CodeBlock code="pip install -r requirements.txt" />
-            <p className="text-sm mt-2 text-muted-foreground">
-              Esto puede tardar varios minutos, especialmente si incluye bibliotecas grandes como TensorFlow 
-              o PyTorch.
-            </p>
+
+            <h4 className="font-semibold mt-4 mb-2">Paso 2 (alternativo): Si el proyecto usa requirements.txt</h4>
+            <p className="text-sm mb-2">Si el proyecto aún usa el formato tradicional:</p>
+            <CodeBlock code="uv pip install -r requirements.txt" />
 
             <div className="bg-success/10 border border-success/20 rounded-lg p-4 mt-4">
               <h4 className="font-semibold mb-2">¡Listo!</h4>
               <p className="text-sm">
-                Ya tienes el repositorio del curso clonado y el entorno configurado. Ahora puedes:
+                Ya tienes el repositorio clonado y las dependencias instaladas. Ahora puedes ejecutar 
+                cualquier script con <code className="bg-code text-code-foreground px-1 rounded text-xs">uv run python script.py</code>.
               </p>
-              <ul className="text-sm list-disc list-inside mt-2 space-y-1">
-                <li>Explorar los archivos del proyecto</li>
-                <li>Abrir notebooks en Jupyter o VS Code</li>
-                <li>Ejecutar scripts de ejemplo</li>
-              </ul>
             </div>
           </div>
 
@@ -155,9 +133,6 @@ export const CloneSection = () => {
               Una vez clonado y configurado, abre el proyecto en VS Code:
             </p>
             <CodeBlock code="code ." />
-            <p className="text-sm text-muted-foreground mt-2">
-              (El punto significa "carpeta actual". Asegúrate de estar dentro de la carpeta del proyecto)
-            </p>
             <p className="text-sm mt-3">
               <strong>O desde VS Code:</strong> File → Open Folder → Selecciona la carpeta <code>curso-ml-python</code>
             </p>
@@ -168,23 +143,20 @@ export const CloneSection = () => {
                 <li><strong>1.</strong> Abre cualquier archivo .py en VS Code</li>
                 <li><strong>2.</strong> Presiona <code className="bg-code text-code-foreground px-1 rounded text-xs">Ctrl+Shift+P</code> (o <code className="bg-code text-code-foreground px-1 rounded text-xs">Cmd+Shift+P</code> en macOS)</li>
                 <li><strong>3.</strong> Busca "Python: Select Interpreter"</li>
-                <li><strong>4.</strong> Selecciona el intérprete de tu entorno virtual (.venv)</li>
+                <li><strong>4.</strong> Selecciona el intérprete del entorno virtual creado por uv (<code>.venv</code>)</li>
               </ol>
-              <p className="text-sm text-muted-foreground mt-2">
-                Esto asegura que VS Code use el entorno virtual correcto con todas las dependencias instaladas.
-              </p>
             </div>
           </div>
 
           <div>
             <h3 className="text-xl font-semibold mb-3">Recibir actualizaciones del repositorio</h3>
             <p className="text-sm mb-2">
-              Si el instructor actualiza el repositorio (agrega ejemplos, corrige errores), puedes obtener 
-              los cambios:
+              Si el instructor actualiza el repositorio, obtén los cambios:
             </p>
-            <CodeBlock code="git pull origin main" />
+            <CodeBlock code={`git pull origin main
+uv sync`} />
             <p className="text-sm text-muted-foreground mt-2">
-              (Asegúrate de haber guardado y committeado tus propios cambios primero, o podrías tener conflictos)
+              <code className="bg-code text-code-foreground px-1 rounded text-xs">uv sync</code> se asegura de que las nuevas dependencias también se instalen.
             </p>
           </div>
 
