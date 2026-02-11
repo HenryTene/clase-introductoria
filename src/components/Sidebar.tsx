@@ -8,7 +8,8 @@ import {
   PlayCircle, 
   CheckSquare,
   Menu,
-  X
+  X,
+  Brain
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -34,11 +35,33 @@ const sections = [
 export const Sidebar = ({ activeSection, onSectionChange, completedSections }: SidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const progress = Math.round((completedSections.length / sections.length) * 100);
+
   const SidebarContent = () => (
     <>
       <div className="p-6 border-b border-border">
-        <h1 className="text-xl font-bold text-foreground">ML con Python</h1>
-        <p className="text-sm text-muted-foreground mt-1">Clase Introductoria</p>
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-gradient-primary rounded-lg shadow-glow">
+            <Brain className="h-5 w-5 text-primary-foreground" />
+          </div>
+          <div>
+            <h1 className="text-lg font-bold text-foreground">ML con Python</h1>
+            <p className="text-xs text-muted-foreground">Clase Introductoria</p>
+          </div>
+        </div>
+        {/* Progress bar */}
+        <div className="mt-4">
+          <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
+            <span>Progreso</span>
+            <span>{progress}%</span>
+          </div>
+          <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-primary rounded-full transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
       </div>
 
       <nav className="flex-1 p-4 overflow-y-auto">
@@ -56,13 +79,13 @@ export const Sidebar = ({ activeSection, onSectionChange, completedSections }: S
                     setIsOpen(false);
                   }}
                   className={cn(
-                    "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors",
+                    "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all duration-200",
                     isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "hover:bg-muted text-foreground"
+                      ? "bg-primary/15 text-primary border border-primary/30 shadow-glow"
+                      : "hover:bg-secondary text-muted-foreground hover:text-foreground"
                   )}
                 >
-                  <Icon className="h-5 w-5 flex-shrink-0" />
+                  <Icon className={cn("h-4 w-4 flex-shrink-0", isCompleted && !isActive && "text-success")} />
                   <span className="flex-1 text-sm font-medium">
                     {index + 1}. {section.label}
                   </span>
@@ -90,7 +113,7 @@ export const Sidebar = ({ activeSection, onSectionChange, completedSections }: S
       <Button
         variant="outline"
         size="icon"
-        className="fixed top-4 left-4 z-50 md:hidden"
+        className="fixed top-4 left-4 z-50 md:hidden bg-card border-border"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -107,7 +130,7 @@ export const Sidebar = ({ activeSection, onSectionChange, completedSections }: S
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 h-full w-72 bg-card border-r border-border flex flex-col transition-transform duration-300 z-40",
+          "fixed top-0 left-0 h-full w-72 bg-sidebar border-r border-border flex flex-col transition-transform duration-300 z-40",
           "md:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}

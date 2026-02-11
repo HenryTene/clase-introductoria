@@ -9,6 +9,8 @@ import { VenvSection } from "@/components/sections/VenvSection";
 import { CloneSection } from "@/components/sections/CloneSection";
 import { FirstScriptSection } from "@/components/sections/FirstScriptSection";
 import { FinalChecklistSection } from "@/components/sections/FinalChecklistSection";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("welcome");
@@ -31,7 +33,6 @@ const Index = () => {
     if (!completedSections.includes(activeSection)) {
       setCompletedSections([...completedSections, activeSection]);
     }
-    // Scroll to top when changing sections
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -69,6 +70,8 @@ const Index = () => {
     }
   };
 
+  const currentIndex = sections.indexOf(activeSection);
+
   return (
     <div className="flex min-h-screen w-full bg-background">
       <Sidebar
@@ -80,38 +83,33 @@ const Index = () => {
       <main className="flex-1 p-6 md:p-8 lg:p-12 max-w-4xl mx-auto w-full">
         <div className="mb-8">
           <ProgressBar
-            current={sections.indexOf(activeSection) + 1}
+            current={currentIndex + 1}
             total={sections.length}
           />
         </div>
 
-        <div className="animate-in fade-in duration-300">{renderSection()}</div>
+        <div className="animate-slide-up">{renderSection()}</div>
 
         {activeSection !== "final" && (
           <div className="mt-8 flex justify-between">
-            {sections.indexOf(activeSection) > 0 && (
-              <button
-                onClick={() =>
-                  handleSectionChange(
-                    sections[sections.indexOf(activeSection) - 1]
-                  )
-                }
-                className="text-primary hover:underline"
+            {currentIndex > 0 && (
+              <Button
+                variant="ghost"
+                onClick={() => handleSectionChange(sections[currentIndex - 1])}
+                className="text-muted-foreground hover:text-foreground"
               >
-                ← Sección anterior
-              </button>
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                Sección anterior
+              </Button>
             )}
-            {sections.indexOf(activeSection) < sections.length - 1 && (
-              <button
-                onClick={() =>
-                  handleSectionChange(
-                    sections[sections.indexOf(activeSection) + 1]
-                  )
-                }
-                className="ml-auto text-primary hover:underline"
+            {currentIndex < sections.length - 1 && (
+              <Button
+                onClick={() => handleSectionChange(sections[currentIndex + 1])}
+                className="ml-auto bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-90"
               >
-                Siguiente sección →
-              </button>
+                Siguiente sección
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
             )}
           </div>
         )}
