@@ -26,7 +26,7 @@ const sections = [
   { id: "git", label: "Git y GitHub", icon: GitBranch },
   { id: "vscode", label: "VS Code", icon: Code2 },
   { id: "python", label: "Python", icon: Terminal },
-  { id: "venv", label: "Entornos Virtuales", icon: Package },
+  { id: "venv", label: "Gestor UV", icon: Package },
   { id: "clone", label: "Clonar Repositorio", icon: FolderGit2 },
   { id: "first-script", label: "Primer Script", icon: PlayCircle },
   { id: "final", label: "Checklist Final", icon: CheckSquare },

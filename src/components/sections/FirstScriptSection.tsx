@@ -23,7 +23,7 @@ export const FirstScriptSection = () => {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary font-bold">✓</span>
-              <span>Confirmar que tu entorno virtual funciona</span>
+              <span>Confirmar que uv y las dependencias funcionan</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary font-bold">✓</span>
@@ -41,8 +41,7 @@ export const FirstScriptSection = () => {
 
           <h4 className="font-semibold mt-4 mb-2">Paso 1: Crea un archivo Python</h4>
           <p className="text-sm mb-2">
-            En la carpeta raíz de tu proyecto (donde está el archivo <code>requirements.txt</code>), 
-            crea un nuevo archivo llamado <code>hola_ml.py</code>
+            En la carpeta raíz de tu proyecto, crea un nuevo archivo llamado <code>hola_ml.py</code>
           </p>
           <p className="text-sm text-muted-foreground mb-3">
             Puedes hacerlo desde VS Code: File → New File → Guárdalo como <code>hola_ml.py</code>
@@ -106,23 +105,17 @@ if __name__ == "__main__":
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold mb-3">Ejecutar tu script</h3>
+          <h3 className="text-xl font-semibold mb-3">Ejecutar tu script con uv</h3>
 
-          <h4 className="font-semibold mt-4 mb-2">Paso 1: Asegúrate de que tu entorno virtual está activado</h4>
+          <h4 className="font-semibold mt-4 mb-2">Paso 1: Asegúrate de tener las dependencias</h4>
           <p className="text-sm mb-2">
-            Deberías ver <code className="bg-code text-code-foreground px-1 rounded text-xs">(.venv)</code> al 
-            inicio de tu línea de comando. Si no, actívalo:
+            Si aún no has agregado NumPy y Pandas al proyecto:
           </p>
-          <p className="text-sm mb-1"><strong>Windows:</strong></p>
-          <CodeBlock code=".\.venv\Scripts\Activate.ps1" />
-          <p className="text-sm mb-1"><strong>macOS/Linux:</strong></p>
-          <CodeBlock code="source .venv/bin/activate" />
+          <CodeBlock code="uv add numpy pandas" />
 
           <h4 className="font-semibold mt-4 mb-2">Paso 2: Ejecuta el script</h4>
-          <p className="text-sm mb-2">En la terminal (dentro de la carpeta del proyecto), ejecuta:</p>
-          <CodeBlock code="python hola_ml.py" />
-          <p className="text-sm mb-2">O en Windows también:</p>
-          <CodeBlock code="py hola_ml.py" />
+          <p className="text-sm mb-2">Usa <code className="bg-code text-code-foreground px-1 rounded text-xs">uv run</code> para ejecutar dentro del entorno:</p>
+          <CodeBlock code="uv run python hola_ml.py" />
 
           <div className="bg-success/10 border border-success/20 rounded-lg p-4 mt-4">
             <h4 className="font-semibold mb-2">¿Qué deberías ver?</h4>
@@ -133,9 +126,9 @@ if __name__ == "__main__":
 ==================================================
 
 📊 Información del entorno:
-Versión de Python: 3.11.5
-Versión de NumPy: 1.24.3
-Versión de Pandas: 2.0.2
+Versión de Python: 3.12.0
+Versión de NumPy: 1.26.4
+Versión de Pandas: 2.2.0
 
 🔢 Prueba con NumPy:
 Array: [1 2 3 4 5]
@@ -163,25 +156,21 @@ Estás listo para comenzar con Machine Learning.
             <div className="bg-muted rounded-lg p-4">
               <h4 className="font-semibold mb-2">Error: "ModuleNotFoundError: No module named 'numpy'"</h4>
               <p className="text-sm mb-2">
-                <strong>Causa:</strong> Las bibliotecas no están instaladas o el entorno virtual no está activado.
+                <strong>Causa:</strong> Las bibliotecas no están instaladas en el proyecto.
               </p>
               <p className="text-sm mb-2"><strong>Solución:</strong></p>
               <ol className="text-sm list-decimal list-inside space-y-1">
-                <li>Verifica que el entorno virtual esté activado (busca <code>(.venv)</code>)</li>
-                <li>Instala las dependencias: <code className="bg-code text-code-foreground px-1 rounded text-xs">pip install -r requirements.txt</code></li>
+                <li>Agrega las dependencias: <code className="bg-code text-code-foreground px-1 rounded text-xs">uv add numpy pandas</code></li>
+                <li>Ejecuta con uv: <code className="bg-code text-code-foreground px-1 rounded text-xs">uv run python hola_ml.py</code></li>
               </ol>
             </div>
 
             <div className="bg-muted rounded-lg p-4">
-              <h4 className="font-semibold mb-2">Error: "python: command not found"</h4>
+              <h4 className="font-semibold mb-2">Error: "uv: command not found"</h4>
               <p className="text-sm mb-2">
-                <strong>Causa:</strong> Python no está instalado o no está en el PATH.
+                <strong>Causa:</strong> uv no está instalado o no está en el PATH.
               </p>
-              <p className="text-sm mb-2"><strong>Solución:</strong></p>
-              <ul className="text-sm list-disc list-inside space-y-1">
-                <li>En Windows, intenta usar <code>py</code> en lugar de <code>python</code></li>
-                <li>Verifica la instalación: revisa la sección "Python" de este curso</li>
-              </ul>
+              <p className="text-sm mb-2"><strong>Solución:</strong> Revisa la sección "Gestor UV" para instrucciones de instalación.</p>
             </div>
           </div>
         </div>
@@ -193,7 +182,7 @@ Estás listo para comenzar con Machine Learning.
           </p>
           <ol className="text-sm list-decimal list-inside space-y-2">
             <li>Abre <code>hola_ml.py</code> en VS Code</li>
-            <li>Asegúrate de que el intérprete correcto está seleccionado (esquina inferior derecha, debe mostrar algo como <code>Python 3.11.5 ('.venv')</code>)</li>
+            <li>Asegúrate de que el intérprete correcto está seleccionado (esquina inferior derecha, debe mostrar el Python del <code>.venv</code> creado por uv)</li>
             <li>Haz clic derecho en el editor → "Run Python File in Terminal"</li>
             <li>O presiona el botón ▶️ en la esquina superior derecha</li>
           </ol>
