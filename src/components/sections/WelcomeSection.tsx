@@ -6,7 +6,7 @@ export const WelcomeSection = () => {
     <SectionCard title="Bienvenida" icon={Rocket}>
       <div className="space-y-4">
         <p className="text-lg">
-          ¡Bienvenido al curso de <span className="text-gradient-primary font-bold">Inteligencia Artificial y Machine Learning con Python</span>!
+          ¡Bienvenido al curso de <span className="text-gradient-primary font-bold">Analista de Datos con Inteligencia Artificial</span>!
         </p>
         
         <p className="text-muted-foreground">
